@@ -1,11 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'controllers/usuario_controller.dart';
 import 'views/home.dart';
 import 'views/login.dart';
 import 'views/register.dart';
-import 'views/pages/recover_password.dart';
+import 'views/pages/perfil.dart';
+import 'views/visitas/visitas_page.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'views/pages/change_password.dart';
+import 'views/pages/recover_password.dart';
+import 'controllers/usuario_controller.dart';
+import 'controllers/visita_controller.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,8 +19,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => UsuarioController(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => UsuarioController()),
+        ChangeNotifierProvider(create: (context) => VisitaController()),
+      ],
       child: MaterialApp(
         title: 'Mi Aplicación',
         theme: ThemeData(
@@ -31,6 +37,8 @@ class MyApp extends StatelessWidget {
           '/register': (context) => const MyRegister(),
           '/recover_password': (context) => const RecoverPasswordPage(),
           '/change_password': (context) => const ChangePasswordPage(),
+          '/perfil': (context) => const Perfil(),
+          '/mis_visitas': (context) => const MisVisitasPage(),
         },
       ),
     );

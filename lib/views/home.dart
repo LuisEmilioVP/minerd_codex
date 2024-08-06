@@ -4,6 +4,7 @@ import '../controllers/usuario_controller.dart';
 import '../models/user_model.dart';
 import 'pages/creadores.dart';
 import 'pages/perfil.dart';
+import 'visitas/visitas_page.dart';
 import 'login.dart';
 
 class Home extends StatefulWidget {
@@ -324,7 +325,10 @@ class _HomeState extends State<Home> {
             // Navigator.push(context, MaterialPageRoute(builder: (context) => CentroEducativos()));
             break;
           case 2:
-            // Navigator.push(context, MaterialPageRoute(builder: (context) => Visitas()));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const MisVisitasPage()));
             break;
           case 3:
             // Navigator.push(context, MaterialPageRoute(builder: (context) => ReportesVisitas()));
