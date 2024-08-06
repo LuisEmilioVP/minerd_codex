@@ -1,36 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../controllers/usuario_controller.dart';
+import '../../controllers/usuario_controller.dart';
 
-class MyLogin extends StatefulWidget {
-  const MyLogin({super.key});
+class ChangePasswordPage extends StatefulWidget {
+  const ChangePasswordPage({super.key});
 
   @override
-  createState() => _MyLoginState();
+  createState() => _ChangePasswordPageState();
 }
 
-class _MyLoginState extends State<MyLogin> {
-  bool isChecked = false;
-  TextEditingController cedula = TextEditingController();
-  TextEditingController password = TextEditingController();
+class _ChangePasswordPageState extends State<ChangePasswordPage> {
+  TextEditingController oldPasswordController = TextEditingController();
+  TextEditingController newPasswordController = TextEditingController();
 
-  // Método para manejar el inicio de sesión
-  void _handleLogin() async {
-    final cedulaText = cedula.text;
-    final claveText = password.text;
+  void _handleChangePassword() async {
+    final oldPassword = oldPasswordController.text;
+    final newPassword = newPasswordController.text;
+    final token =
+        Provider.of<UsuarioController>(context, listen: false).user?.token;
 
-    await Provider.of<UsuarioController>(context, listen: false)
-        .login(cedulaText, claveText);
+    if (token != null) {
+      await Provider.of<UsuarioController>(context, listen: false)
+          .changePassword(token, oldPassword, newPassword);
 
-    if (Provider.of<UsuarioController>(context, listen: false).errorMessage ==
-        null) {
-      Navigator.pushNamed(context, '/home');
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-            content: Text(Provider.of<UsuarioController>(context, listen: false)
-                .errorMessage!)),
-      );
+      final errorMessage =
+          Provider.of<UsuarioController>(context, listen: false).errorMessage;
+      final successMessage =
+          Provider.of<UsuarioController>(context, listen: false).successMessage;
+
+      if (errorMessage == null && successMessage != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(successMessage)),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(errorMessage ?? 'Error desconocido'),
+          ),
+        );
+      }
     }
   }
 
@@ -49,7 +57,7 @@ class _MyLoginState extends State<MyLogin> {
             Container(
               padding: const EdgeInsets.only(left: 35, top: 130),
               child: const Text(
-                'Bienvenido de nuevo',
+                'Cambiar Contraseña',
                 style: TextStyle(color: Colors.white, fontSize: 33),
               ),
             ),
@@ -65,12 +73,13 @@ class _MyLoginState extends State<MyLogin> {
                       child: Column(
                         children: [
                           TextField(
-                            controller: cedula,
+                            controller: oldPasswordController,
                             style: const TextStyle(color: Colors.black),
+                            obscureText: true,
                             decoration: InputDecoration(
                                 fillColor: Colors.grey.shade100,
                                 filled: true,
-                                hintText: "Cédula",
+                                hintText: "Contraseña Anterior",
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
                                 )),
@@ -79,13 +88,13 @@ class _MyLoginState extends State<MyLogin> {
                             height: 30,
                           ),
                           TextField(
-                            controller: password,
-                            style: const TextStyle(),
+                            controller: newPasswordController,
+                            style: const TextStyle(color: Colors.black),
                             obscureText: true,
                             decoration: InputDecoration(
                                 fillColor: Colors.grey.shade100,
                                 filled: true,
-                                hintText: "Contraseña",
+                                hintText: "Nueva Contraseña",
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
                                 )),
@@ -94,27 +103,10 @@ class _MyLoginState extends State<MyLogin> {
                             height: 40,
                           ),
                           Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              const Text(
-                                "Recordarme",
-                                style: TextStyle(color: Colors.black),
-                              ),
-                              Checkbox(
-                                value: isChecked,
-                                onChanged: (value) {
-                                  setState(() {
-                                    isChecked = value!;
-                                  });
-                                },
-                              ),
-                            ],
-                          ),
-                          Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               const Text(
-                                'Iniciar Sesion',
+                                'Cambiar',
                                 style: TextStyle(
                                     fontSize: 27, fontWeight: FontWeight.w700),
                               ),
@@ -123,8 +115,7 @@ class _MyLoginState extends State<MyLogin> {
                                 backgroundColor: const Color(0xff4c505b),
                                 child: IconButton(
                                   color: Colors.white,
-                                  onPressed:
-                                      _handleLogin, // Llama a _handleLogin
+                                  onPressed: _handleChangePassword,
                                   icon: const Icon(
                                     Icons.arrow_forward,
                                   ),
@@ -136,14 +127,14 @@ class _MyLoginState extends State<MyLogin> {
                             height: 40,
                           ),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               TextButton(
                                 onPressed: () {
-                                  Navigator.pushNamed(context, '/register');
+                                  Navigator.pop(context);
                                 },
                                 child: const Text(
-                                  'Registrarse',
+                                  'Volver',
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
                                       decoration: TextDecoration.underline,
@@ -151,19 +142,6 @@ class _MyLoginState extends State<MyLogin> {
                                       fontSize: 18),
                                 ),
                               ),
-                              TextButton(
-                                  onPressed: () {
-                                    Navigator.pushNamed(
-                                        context, '/recover_password');
-                                  },
-                                  child: const Text(
-                                    'Recuperar contraseña',
-                                    style: TextStyle(
-                                      decoration: TextDecoration.underline,
-                                      color: Color(0xff4c505b),
-                                      fontSize: 18,
-                                    ),
-                                  )),
                             ],
                           )
                         ],

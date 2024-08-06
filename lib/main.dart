@@ -4,6 +4,8 @@ import 'controllers/usuario_controller.dart';
 import 'views/home.dart';
 import 'views/login.dart';
 import 'views/register.dart';
+import 'views/pages/recover_password.dart';
+import 'views/pages/change_password.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,6 +29,8 @@ class MyApp extends StatelessWidget {
           '/home': (context) => const Home(),
           '/login': (context) => const MyLogin(),
           '/register': (context) => const MyRegister(),
+          '/recover_password': (context) => const RecoverPasswordPage(),
+          '/change_password': (context) => const ChangePasswordPage(),
         },
       ),
     );

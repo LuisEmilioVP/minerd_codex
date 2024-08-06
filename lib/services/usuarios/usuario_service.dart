@@ -31,7 +31,6 @@ class UsuarioService {
     print('Response body: ${response.body}');
 
     if (response.statusCode == 200) {
-      // Verifica que el cuerpo de la respuesta no esté vacío
       if (response.body.isNotEmpty) {
         return jsonDecode(response.body);
       } else {
@@ -39,6 +38,41 @@ class UsuarioService {
       }
     } else {
       throw Exception('Fallo al conectar con la API');
+    }
+  }
+
+  Future<Map<String, dynamic>> recoverPassword(
+      String cedula, String correo) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/recuperar_clave.php'),
+      body: {
+        'cedula': cedula,
+        'correo': correo,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      throw Exception('Recuperación de contraseña fallida');
+    }
+  }
+
+  Future<Map<String, dynamic>> changePassword(
+      String token, String oldPassword, String newPassword) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/cambiar_clave.php'),
+      body: {
+        'token': token,
+        'clave_anterior': oldPassword,
+        'clave_nueva': newPassword,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      throw Exception('Cambio de contraseña fallido');
     }
   }
 }

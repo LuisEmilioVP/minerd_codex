@@ -29,3 +29,6 @@ flutter:
   assets:
     - assets/images/login.png
     - assets/images/register.png
+    - assets/images/bg-body.png
+    - assets/images/user.png
+    - assets/images/banner.png
