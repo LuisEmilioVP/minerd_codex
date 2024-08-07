@@ -29,7 +29,9 @@ class _PerfilState extends State<Perfil> {
               color: Colors.white,
             ),
           ),
-          backgroundColor: const Color(0xFF0F539C),
+          backgroundColor: const Color(0xff0F539C),
+          titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
+          iconTheme: const IconThemeData(color: Colors.white),
         ),
         body: Center(
           child: Padding(

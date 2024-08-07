@@ -12,15 +12,28 @@ dependencies:
     sdk: flutter
   http: ^1.2.2
   provider: ^6.1.2
-  flutter_secure_storage: ^9.2.2
+  flutter_sound: ^9.9.5
+  path_provider: ^2.1.4
+  flutter_map: ^7.0.2
+  latlong2: ^0.9.1
+  geocoding: ^3.0.0
+  image_picker: ^1.1.2
+  permission_handler: ^11.3.1
+  youtube_player_flutter: ^8.0.0
 
   cupertino_icons: ^1.0.6
+  flutter_launcher_icons: ^0.13.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
   flutter_lints: ^3.0.0
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: 'assets/images/app_logo.png'
+  adaptive_icon_background: 'assets/images/app_logo.png'
 
 flutter:
   uses-material-design: true
@@ -30,5 +43,15 @@ flutter:
     - assets/images/login.png
     - assets/images/register.png
     - assets/images/bg-body.png
+    - assets/images/listarcentros.jpg
     - assets/images/user.png
     - assets/images/banner.png
+    - assets/images/cold.gif
+    - assets/images/sun.gif
+    - assets/images/default.gif
+    - assets/images/app_logo.png
+    - assets/users/fraimer_aquiles.png
+    - assets/users/jesus_adrian.png
+    - assets/users/luis_emilio.png
+    - assets/users/mileidy_nicole.png
+    - assets/users/willenson_rafael.png

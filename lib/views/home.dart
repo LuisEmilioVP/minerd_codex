@@ -5,6 +5,12 @@ import '../models/user_model.dart';
 import 'pages/creadores.dart';
 import 'pages/perfil.dart';
 import 'visitas/visitas_page.dart';
+import 'visitas/registrar_visita_page.dart';
+import 'pages/listar_centros.dart';
+import 'pages/horoscope_screen.dart';
+import 'videos/video_list.dart';
+import 'noticia/news_list.dart';
+import 'weather_screen.dart';
 import 'login.dart';
 
 class Home extends StatefulWidget {
@@ -130,89 +136,17 @@ class _HomeState extends State<Home> {
               left: 0,
               right: 0,
               bottom: 0,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 10.0, vertical: 10.0),
-                child: Column(
-                  children: [
-                    // Noticias recientes
-                    const Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Noticias Recientes",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                      ),
+              child: const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+                child: Card(
+                  child: Text(
+                    'Educar a la juventud es sembrar el futuro con esperanza y conocimiento, forjando mentes capaces de transformar el mundo con sabiduría y valentía.',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Color(0xff48494a),
                     ),
-                    const SizedBox(height: 8.0),
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: 5, // Número de noticias recientes
-                        itemBuilder: (context, index) {
-                          return Card(
-                            margin: const EdgeInsets.symmetric(vertical: 8.0),
-                            child: Column(
-                              children: [
-                                Container(
-                                  height: 150,
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      image: AssetImage(
-                                          'assets/images/noticia${index + 1}.jpg'),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Título de la noticia ${index + 1}',
-                                        style: const TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 4.0),
-                                      Text(
-                                        'Resumen de la noticia ${index + 1}',
-                                        style: const TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.black54,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 8.0),
-                                      Align(
-                                        alignment: Alignment.centerRight,
-                                        child: ElevatedButton(
-                                          onPressed: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const NoticiaDetalle(),
-                                              ),
-                                            );
-                                          },
-                                          child: const Text("Leer más"),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ],
+                    textAlign: TextAlign.center,
+                  ),
                 ),
               ),
             ),
@@ -286,10 +220,12 @@ class _HomeState extends State<Home> {
                   buildMenuItem(Icons.report, 'Reportes Visitas', 3),
                   buildMenuItem(Icons.newspaper, 'Noticias', 4),
                   buildMenuItem(Icons.video_library, 'Videos', 5),
-                  buildMenuItem(Icons.info, 'Acerca de la App', 6),
-                  buildMenuItem(Icons.group, 'Creadores', 7),
+                  buildMenuItem(Icons.group, 'Creadores', 6),
                   const Divider(),
-                  buildMenuItem(Icons.logout, 'Cerrar Sesión', 8),
+                  buildMenuItem(Icons.stars, 'Horóscopo', 7),
+                  buildMenuItem(Icons.wb_sunny, 'Clima', 8),
+                  const Divider(),
+                  buildMenuItem(Icons.logout, 'Cerrar Sesión', 9),
                 ],
               ),
           ],
@@ -322,7 +258,10 @@ class _HomeState extends State<Home> {
                 MaterialPageRoute(builder: (context) => const Perfil()));
             break;
           case 1:
-            // Navigator.push(context, MaterialPageRoute(builder: (context) => CentroEducativos()));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const CentroEducativoPage()));
             break;
           case 2:
             Navigator.push(
@@ -331,43 +270,42 @@ class _HomeState extends State<Home> {
                     builder: (context) => const MisVisitasPage()));
             break;
           case 3:
-            // Navigator.push(context, MaterialPageRoute(builder: (context) => ReportesVisitas()));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const RegistrarVisitaPage()));
             break;
           case 4:
-            // Navigator.push(context, MaterialPageRoute(builder: (context) => Noticias()));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const NewsListScreen()));
             break;
           case 5:
-            // Navigator.push(context, MaterialPageRoute(builder: (context) => Videos()));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const VideoListScreen()));
             break;
           case 6:
-            // Navigator.push(context, MaterialPageRoute(builder: (context) => AcercaDe()));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const GroupScreen()));
             break;
           case 7:
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const Creadores()));
-            break;
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const HoroscopeScreen()));
           case 8:
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => WeatherScreen()));
+            break;
+          case 9:
             Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) => const MyLogin()));
             break;
         }
       },
-    );
-  }
-}
-
-class NoticiaDetalle extends StatelessWidget {
-  const NoticiaDetalle({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Detalle de la Noticia"),
-      ),
-      body: const Center(
-        child: Text("Contenido de la noticia detallada aquí"),
-      ),
     );
   }
 }
